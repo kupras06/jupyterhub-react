@@ -1,5 +1,6 @@
 import { useFileId } from "@/hooks/useFileId";
 import CodeEditor from "@/views/files/CodeCell";
+import { FileInfo } from "@/views/files/FileInfo";
 
 function EmptyFile() {
 	return (
@@ -15,8 +16,11 @@ export function File() {
 	const fileId = useFileId();
 	if (!fileId) return <EmptyFile />;
 	return (
-		<div>
-			<CodeEditor />
-		</div>
+		<main className="flex bg-gray-50 h-screen flex-col items-center pt-4 px-8 ">
+			<FileInfo />
+			<div className="overflow-y-scroll w-full">
+				<CodeEditor />
+			</div>
+		</main>
 	);
 }

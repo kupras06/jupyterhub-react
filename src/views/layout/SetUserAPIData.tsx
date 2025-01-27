@@ -44,7 +44,9 @@ export function SetUserData() {
 			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
 				<ModalContent>
 					<>
-						<ModalHeader className="flex flex-col gap-1">Set Data</ModalHeader>
+						<ModalHeader className="flex flex-col gap-1">
+							Set Source Data
+						</ModalHeader>
 						<ModalBody>
 							<Form
 								onSubmit={handleSubmit(onSubmit)}
@@ -53,12 +55,18 @@ export function SetUserData() {
 							>
 								<Input
 									placeholder="API Url"
+									label="API Url"
+									labelPlacement="outside"
+									description="The URL of your JupyterHub API"
 									isInvalid={Boolean(errors.apiUrl)}
 									errorMessage={errors.apiUrl?.message}
 									{...register("apiUrl", { required: true })}
 								/>
 								<Input
 									placeholder="Auth Token"
+									label="Auth Token"
+									labelPlacement="outside"
+									description="The auth token of your JupyterHub API"
 									isInvalid={Boolean(errors.authToken)}
 									errorMessage={errors.authToken?.message}
 									{...register("authToken", { required: true })}

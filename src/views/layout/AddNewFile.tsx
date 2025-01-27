@@ -41,8 +41,9 @@ function FileNameInput() {
 			validationBehavior="native"
 			className="pb-4"
 		>
-			<label htmlFor="fileName">File Name</label>
 			<Input
+				label="File Name"
+				labelPlacement="outside"
 				isInvalid={Boolean(errors.fileName)}
 				errorMessage={errors.fileName?.message}
 				placeholder="New File Name"
