@@ -1,7 +1,16 @@
 import { useUser } from "@/providers/UserProvider";
-import { Button, Form, Input, Modal, ModalBody, ModalContent, ModalHeader, useDisclosure,  } from "@heroui/react";
+import {
+	Button,
+	Form,
+	Input,
+	Modal,
+	ModalBody,
+	ModalContent,
+	ModalHeader,
+	useDisclosure,
+} from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import {type SubmitHandler, useForm } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const UserSchema = z.object({
@@ -18,14 +27,13 @@ export function SetUserData() {
 	} = useForm<FormInput>({
 		resolver: zodResolver(UserSchema),
 	});
-	const {setUser} = useUser();
-	const { isOpen, onOpen, onOpenChange,onClose } = useDisclosure();
+	const { setUser } = useUser();
+	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
 	const onSubmit: SubmitHandler<FormInput> = (data) => {
-		console.log(data)
+		console.log(data);
 		setUser(data);
 		onClose();
 		window.location.reload();
-		
 	};
 
 	return (

@@ -1,8 +1,7 @@
 import { Route, Routes } from "react-router";
-import { FilesList } from "./pages/FilesList";
 import { File } from "./pages/File";
 import { AppLayout } from "./views/layout/Layout";
-import { Home } from "./pages/home";
+import { Home } from "./pages/HomePage";
 
 export const AppRouter = () => {
 	return (
@@ -10,7 +9,6 @@ export const AppRouter = () => {
 			<Route element={<AppLayout />}>
 				<Route index element={<Home />} />
 				<Route path="files">
-					<Route index element={<FilesList />} />
 					<Route path=":fileId" element={<File />} />
 				</Route>
 			</Route>

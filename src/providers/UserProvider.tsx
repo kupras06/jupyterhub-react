@@ -20,7 +20,7 @@ export const [UserProvider, useUser] = createZustandContext(
 				}),
 				{
 					name: "user-storage",
-					storage: createJSONStorage(() => localStorage), 
+					storage: createJSONStorage(() => localStorage),
 				},
 			),
 		),
