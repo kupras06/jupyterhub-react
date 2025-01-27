@@ -1,15 +1,6 @@
-import {
-	Modal,
-	ModalContent,
-	ModalHeader,
-	ModalBody,
-	Button,
-	useDisclosure,
-	Form,
-	Input,
-} from "@heroui/react";
+import { Button, Form, Input } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, type SubmitHandler } from "react-hook-form";
+import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
 const FormSchema = z.object({
@@ -26,7 +17,7 @@ const FormSchema = z.object({
 		}),
 });
 type FormInput = z.infer<typeof FormSchema>;
-function FileNameInput() {
+export function FileNameInput({ fileName }: { fileName?: string }) {
 	const {
 		register,
 		handleSubmit,
@@ -47,35 +38,13 @@ function FileNameInput() {
 				isInvalid={Boolean(errors.fileName)}
 				errorMessage={errors.fileName?.message}
 				placeholder="New File Name"
+				defaultValue={fileName}
 				{...register("fileName", { required: true })}
 			/>
 
 			<Button type="submit" color="primary">
-				Create
+				{fileName ? "Update" : "Create"}
 			</Button>
 		</Form>
-	);
-}
-export function AddNewFile() {
-	const { isOpen, onOpen, onOpenChange } = useDisclosure();
-
-	return (
-		<>
-			<Button onPress={onOpen} color="primary">
-				Add new file
-			</Button>
-			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
-				<ModalContent>
-					<>
-						<ModalHeader className="flex flex-col gap-1">
-							Add New File
-						</ModalHeader>
-						<ModalBody>
-							<FileNameInput />
-						</ModalBody>
-					</>
-				</ModalContent>
-			</Modal>
-		</>
 	);
 }
