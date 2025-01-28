@@ -25,7 +25,7 @@ export function useKernels() {
 		queryKey: ["kernels", apiUrl, hubUser?.name],
 		queryFn: async () => {
 			console.log(hubUser);
-			if(!hubUser) return []
+			if(!hubUser) throw new Error("No Hub User Found");
 			const url = `${apiUrl}/user${hubUser?.name}/api/kernels`;
 			const response = await fetch(url);
 			const data = await response.json();

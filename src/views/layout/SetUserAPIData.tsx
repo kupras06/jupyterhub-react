@@ -42,7 +42,7 @@ export function SetUserData() {
 	return (
 		<>
 			<Button onPress={onOpen} color="primary">
-				Set Data
+				Set Source
 			</Button>
 			<Modal isOpen={isOpen} onOpenChange={onOpenChange}>
 				<ModalContent>
