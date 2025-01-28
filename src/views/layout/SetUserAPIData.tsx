@@ -10,6 +10,7 @@ import {
 	useDisclosure,
 } from "@heroui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useQueryClient } from "@tanstack/react-query";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -27,13 +28,15 @@ export function SetUserData() {
 	} = useForm<FormInput>({
 		resolver: zodResolver(UserSchema),
 	});
-	const { setUser } = useUser();
+	const queryClient = useQueryClient();
+	const { setUser,apiUrl,authToken } = useUser();
 	const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-	const onSubmit: SubmitHandler<FormInput> = (data) => {
+	const onSubmit: SubmitHandler<FormInput> = async (data) => {
 		console.log(data);
-		setUser(data);
+		await setUser(data);
 		onClose();
-		window.location.reload();
+		queryClient.invalidateQueries();
+		// window.location.reload();
 	};
 
 	return (
@@ -54,12 +57,13 @@ export function SetUserData() {
 								className="pb-4"
 							>
 								<Input
-									placeholder="API Url"
+									placeholder="http://localhost:8000/user/admin/api"
 									label="API Url"
 									labelPlacement="outside"
-									description="The URL of your JupyterHub API"
+									description="The URL of your JupyterHub API (http://localhost:8000/user/admin/api)"
 									isInvalid={Boolean(errors.apiUrl)}
 									errorMessage={errors.apiUrl?.message}
+									defaultValue={apiUrl}
 									{...register("apiUrl", { required: true })}
 								/>
 								<Input
@@ -69,6 +73,7 @@ export function SetUserData() {
 									description="The auth token of your JupyterHub API"
 									isInvalid={Boolean(errors.authToken)}
 									errorMessage={errors.authToken?.message}
+									defaultValue={authToken}
 									{...register("authToken", { required: true })}
 								/>
 								<Button type="submit" color="primary">

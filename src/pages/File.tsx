@@ -1,4 +1,4 @@
-import { useFileId } from "@/hooks/useFileId";
+import { useFileId } from "@/hooks/useFiles";
 import CodeEditor from "@/views/files/CodeCell";
 import { FileInfo } from "@/views/files/FileInfo";
 

@@ -1,3 +1,8 @@
+import {
+	client,
+	getCurrentUser,
+	type RequestIdentity,
+} from "@/services/client";
 import { create } from "zustand";
 import { createZustandContext } from "zustand-context";
 import { persist, createJSONStorage } from "zustand/middleware";
@@ -5,9 +10,10 @@ import { persist, createJSONStorage } from "zustand/middleware";
 type UserStore = {
 	authToken: string;
 	apiUrl: string;
+	hubUser?: RequestIdentity;
 };
 type UserActions = {
-	setUser: (user: UserStore) => void;
+	setUser: (user: UserStore) => Promise<void>;
 };
 
 export const [UserProvider, useUser] = createZustandContext(
@@ -16,7 +22,28 @@ export const [UserProvider, useUser] = createZustandContext(
 			persist<UserStore & UserActions>(
 				(set) => ({
 					...initialState,
-					setUser: (user) => set((state) => ({ ...state, ...user })),
+					setUser: async (user) => {
+						const headers = {
+							Authorization: `token ${user.authToken}`,
+							'Access-Control-Allow-Origin': '*',
+							'Content-Type': 'application/json',
+							'Access-Control-Allow-Credentials': 'true',
+						}
+						client.setConfig({
+							baseURL: user.apiUrl,
+							headers
+						});
+						const url = `${user.apiUrl}/me`;
+						const response = await fetch(url,{
+							headers
+						});
+						console.log({response});
+						const data = await response.json();
+						console.log({data});
+						const { data: hubUser } = await getCurrentUser();
+						console.log(hubUser);
+						set((state) => ({ ...state, ...user, hubUser }));
+					},
 				}),
 				{
 					name: "user-storage",

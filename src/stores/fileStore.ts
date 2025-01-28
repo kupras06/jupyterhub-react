@@ -24,6 +24,12 @@ export const useFileStore = create<TFileStore & TFIleActions>((set) => ({
 			...prev,
 			cells: [...prev.cells, { ...DEFAULT_CELL, id: newId }],
 		}));
+		setTimeout(() => {
+			const codeMirror = document.getElementById(newId);
+			if (codeMirror) {
+				codeMirror.scrollIntoView({ behavior: "smooth" });
+			}
+		}, 100);
 	},
 	deleteCell: (id) =>
 		set((prev) => ({

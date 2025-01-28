@@ -3,7 +3,7 @@ import { Play, Trash2 } from "lucide-react";
 import CodeMirror from "@uiw/react-codemirror";
 import { python } from "@codemirror/lang-python";
 import { Button } from "@heroui/react";
-import { useFileId } from "@/hooks/useFileId";
+import { useFileId } from "@/hooks/useFiles";
 import { useFileStore } from "@/stores/fileStore";
 
 function CellInfo({ cellId }: { cellId: string }) {
@@ -17,6 +17,7 @@ function CellInfo({ cellId }: { cellId: string }) {
 				className=" hover:bg-gray-200 rounded"
 				title="Run cell (Shift+Enter)"
 				color="primary"
+				variant="light"
 			>
 				<Play size={16} />
 			</Button>
@@ -29,7 +30,7 @@ function CellInfo({ cellId }: { cellId: string }) {
 				className=" hover:bg-gray-200 rounded"
 				title="Delete cell"
 				color="danger"
-				variant="bordered"
+				variant="light"
 			>
 				<Trash2 size={24} />
 			</Button>
@@ -53,7 +54,11 @@ const CodeEditor = () => {
 		<div className="w-full max-w-4xl mx-auto p-4 ">
 			<div className="space-y-4">
 				{cells.map((cell) => (
-					<div key={cell.id} className="bg-white rounded-lg shadow">
+					<div
+						key={cell.id}
+						id={cell.id}
+						className="bg-white rounded-lg shadow"
+					>
 						<CellInfo cellId={cell.id} />
 						<CodeMirror
 							value={cell.code}
