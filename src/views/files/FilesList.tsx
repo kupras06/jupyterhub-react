@@ -45,6 +45,10 @@ function EditFile() {
 		</>
 	);
 }
+const SAMPLE_FILE = {
+	id:'SAMPLE_FILE',
+	title:'Sample_File.py'
+}
 const filesListStyle = tv({
 	slots: {
 		root: 'flex flex-col divide-y-2 space-y-2 my-2',
@@ -57,6 +61,23 @@ export function FilesList() {
 	if (isError) {
 		return <div className={root()}>
 			<Alert color="danger">Error loading files</Alert>
+			<Tooltip content={SAMPLE_FILE.title}>
+					<NavLink
+						to={`files/${SAMPLE_FILE.id}`}
+						key={SAMPLE_FILE.id}
+						className="flex p-1 text-center flex-row gap-1 items-center hover:cursor-pointer hover:bg-slate-100 h-full"
+					>
+						<div className="flex text-lg text-slate-600 gap-2 w-4/5">
+							<div className="text-lg truncate">{SAMPLE_FILE.title}</div>
+						</div>
+						<div className="flex items-center w-1/5">
+							<EditFile />
+							<Button isIconOnly color="danger" variant="light" size="sm">
+								<Trash2 size={16} />
+							</Button>
+						</div>
+					</NavLink>
+				</Tooltip>
 		</div>
 	}
 	if (isLoading) {
@@ -68,7 +89,7 @@ export function FilesList() {
 	}
 	return (
 		<div className={root({className:'flex-grow overflow-y-scroll '})}>
-			{data?.map((file) => (
+			{data?.map((file,idx) => (
 				<Tooltip key={file.id} content={file.title}>
 					<NavLink
 						to={`files/${file.id}`}
@@ -76,7 +97,7 @@ export function FilesList() {
 						className="flex p-1 text-center flex-row gap-1 items-center hover:cursor-pointer hover:bg-slate-100 h-full"
 					>
 						<div className="flex text-lg text-slate-600 gap-2 w-4/5">
-							{file.id}
+							{idx}
 							<div className="text-lg truncate">{file.title}</div>
 						</div>
 						<div className="flex items-center w-1/5">

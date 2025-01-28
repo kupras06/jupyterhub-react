@@ -27,20 +27,26 @@ export const [UserProvider, useUser] = createZustandContext(
 							Authorization: `token ${user.authToken}`,
 							'Access-Control-Allow-Origin': '*',
 							'Content-Type': 'application/json',
-							'Access-Control-Allow-Credentials': 'true',
+							'X-Host-Header':'http://localhost:8000',
+							'origin':'http://localhost:8000',
+							'referer':'http://localhost:8000',
+							'my-host':'http://localhost:8000',
 						}
 						client.setConfig({
 							baseURL: user.apiUrl,
 							headers
 						});
 						const url = `${user.apiUrl}/me`;
+						const { data: hubUser } = await getCurrentUser();
+						console.log(hubUser);
+
 						const response = await fetch(url,{
 							headers
 						});
 						console.log({response});
 						const data = await response.json();
 						console.log({data});
-						const { data: hubUser } = await getCurrentUser();
+						const { data: hubUser1 } = await getCurrentUser();
 						console.log(hubUser);
 						set((state) => ({ ...state, ...user, hubUser }));
 					},
