@@ -42,3 +42,4 @@ This is a React application that allows you to interact with JupyterHub.
 
 ![alt text](./previews/localhost_3000_.png)
 ![alt text](./previews/localhost_3000_1.png)
+![alt text](./previews/localhost_3000_files_SAMPLE_FILE.png)
